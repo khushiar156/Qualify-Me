@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Check Your Eligibility — Qualify Me</title>
+  <meta name="description" content="Enter your age, qualification, category and state to find scholarships and government schemes you qualify for." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div id="site-navbar"></div>
+
+  <section class="page-header">
+    <div class="container">
+      <span class="eyebrow">Form QM-01</span>
+      <h1>Check Your Eligibility</h1>
+      <p>Tell us a little about yourself and we'll find schemes that match your profile.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <form class="form-card" id="eligibilityForm" novalidate>
+
+        <div class="form-field" id="ageField">
+          <label for="age">Age</label>
+          <input type="number" id="age" name="age" min="1" max="100" placeholder="e.g. 20" required />
+          <p class="form-error">Please enter a valid age between 1 and 100.</p>
+        </div>
+
+        <div class="form-field" id="qualificationField">
+          <label for="qualification">Current / Highest Qualification</label>
+          <select id="qualification" name="qualification" required>
+            <option value="" disabled selected>Select your qualification</option>
+          </select>
+          <p class="form-error">Please select your qualification.</p>
+        </div>
+
+        <div class="form-field" id="categoryField">
+          <label for="category">Social Category</label>
+          <select id="category" name="category" required>
+            <option value="" disabled selected>Select your category</option>
+          </select>
+          <p class="form-error">Please select a category.</p>
+        </div>
+
+        <div class="form-field" id="stateField">
+          <label for="state">State</label>
+          <select id="state" name="state">
+            <option value="">Not sure / Skip</option>
+          </select>
+          <p class="form-hint">Central schemes will still be shown even if you skip this. State schemes only match your selected state.</p>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn--primary">Check Eligibility <span class="btn__arrow">&rarr;</span></button>
+          <button type="reset" class="btn btn--outline-dark" id="clearBtn">Clear</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/eligibility.js"></script>
+</body>
+</html>

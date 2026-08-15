@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Explore Scholarships &amp; Schemes — Qualify Me</title>
+  <meta name="description" content="Browse and search every scholarship and government scheme in the Qualify Me database." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div id="site-navbar"></div>
+
+  <section class="page-header">
+    <div class="container">
+      <span class="eyebrow">Case File Directory</span>
+      <h1>Explore Scholarships &amp; Schemes</h1>
+      <p>Browse available opportunities and find one that fits your goals.</p>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="container">
+
+      <div class="filter-bar" id="filterBar">
+        <div class="search-box">
+          <span class="label">Search</span>
+          <input type="text" id="searchInput" placeholder="Search schemes by name, provider or state..." />
+        </div>
+
+        <div class="filter-group">
+          <span class="label">Level</span>
+          <div class="pill-group" id="levelFilter">
+            <button class="pill pill--active" data-level="all">All</button>
+            <button class="pill" data-level="central">Central</button>
+            <button class="pill" data-level="state">State</button>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <span class="label">Qualification</span>
+          <select id="qualificationFilter">
+            <option value="all">All</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <span class="label">Category</span>
+          <select id="categoryFilter">
+            <option value="all">All</option>
+          </select>
+        </div>
+      </div>
+
+      <p class="form-hint" id="resultCount" style="margin-bottom: 20px;"></p>
+
+      <div class="scheme-grid" id="schemesGrid"></div>
+
+      <div class="empty-state" id="noResultsState" style="display: none;">
+        <h2>No schemes match your search.</h2>
+        <p>Try a different keyword or reset the filters.</p>
+        <div class="empty-state__actions">
+          <button class="btn btn--outline-dark" id="resetFiltersBtn">Reset Filters</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/schemes.js"></script>
+</body>
+</html>

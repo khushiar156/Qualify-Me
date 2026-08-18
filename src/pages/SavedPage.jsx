@@ -7,7 +7,40 @@ export default function SavedPage({
   onNavigate,
   onToggleSave,
   onViewDetails,
+  currentUser,
 }) {
+  if (!currentUser) {
+    return (
+      <div>
+        <section className="page-header">
+          <div className="container">
+            <span className="eyebrow">Authentication Required</span>
+            <h1>Saved Schemes</h1>
+            <p>Log in to save and manage your scholarship opportunities.</p>
+          </div>
+        </section>
+
+        <section className="section--tight">
+          <div className="container">
+            <div className="empty-state">
+              <h2>Log in to view saved schemes</h2>
+              <p>Log in to save and manage your scholarship opportunities.</p>
+              <div className="empty-state__actions">
+                <button
+                  type="button"
+                  className="btn btn--primary"
+                  onClick={() => onNavigate('login')}
+                >
+                  Log In <span className="btn__arrow">&rarr;</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
+
   const savedSchemes = savedSchemeIds
     .map((id) => getSchemeById(id))
     .filter(Boolean);

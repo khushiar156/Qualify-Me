@@ -12,14 +12,26 @@ import SavedPage from './pages/SavedPage';
 import HowItWorksPage from './pages/HowItWorksPage';
 import FaqPage from './pages/FaqPage';
 import AboutPage from './pages/AboutPage';
+import LoginPage from './pages/LoginPage';
 
 const SAVED_SCHEMES_KEY = 'qualifyMeSaved';
 const PROFILE_SESSION_KEY = 'qualifyMeProfile';
+const CURRENT_USER_KEY = 'qualifyMeCurrentUser';
 
 export default function App() {
   // Page Routing State
   const [currentPage, setCurrentPage] = useState('home');
   const [selectedSchemeId, setSelectedSchemeId] = useState(null);
+
+  // Logged-in User State (localStorage)
+  const [currentUser, setCurrentUser] = useState(() => {
+    try {
+      const stored = localStorage.getItem(CURRENT_USER_KEY);
+      return stored ? JSON.parse(stored) : null;
+    } catch (err) {
+      return null;
+    }
+  });
 
   // User Eligibility Profile State (sessionStorage)
   const [userProfile, setUserProfile] = useState(() => {
@@ -40,6 +52,19 @@ export default function App() {
       return [];
     }
   });
+
+  // Sync currentUser to localStorage
+  useEffect(() => {
+    try {
+      if (currentUser) {
+        localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(currentUser));
+      } else {
+        localStorage.removeItem(CURRENT_USER_KEY);
+      }
+    } catch (err) {
+      console.error('Failed to sync currentUser to localStorage', err);
+    }
+  }, [currentUser]);
 
   // Sync saved items to localStorage
   useEffect(() => {
@@ -65,6 +90,18 @@ export default function App() {
   const handleNavigate = (pageId) => {
     setCurrentPage(pageId);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Login success handler
+  const handleLoginSuccess = (user) => {
+    setCurrentUser(user);
+    handleNavigate('home');
+  };
+
+  // Logout handler
+  const handleLogout = () => {
+    setCurrentUser(null);
+    handleNavigate('home');
   };
 
   // View scheme details
@@ -139,6 +176,14 @@ export default function App() {
             onNavigate={handleNavigate}
             onToggleSave={handleToggleSave}
             onViewDetails={handleViewDetails}
+            currentUser={currentUser}
+          />
+        );
+      case 'login':
+        return (
+          <LoginPage
+            onLoginSuccess={handleLoginSuccess}
+            onNavigate={handleNavigate}
           />
         );
       case 'how-it-works':
@@ -164,7 +209,9 @@ export default function App() {
       <Navbar
         currentPage={currentPage}
         onNavigate={handleNavigate}
-        savedCount={savedSchemeIds.length}
+        savedCount={currentUser ? savedSchemeIds.length : 0}
+        currentUser={currentUser}
+        onLogout={handleLogout}
       />
       <main>{renderPage()}</main>
       <Footer />

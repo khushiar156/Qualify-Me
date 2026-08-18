@@ -10,13 +10,15 @@ const NAV_ITEMS = [
   { id: 'about', label: 'About' },
 ];
 
-export default function Navbar({ currentPage, onNavigate, savedCount }) {
+export default function Navbar({ currentPage, onNavigate, savedCount, currentUser, onLogout }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLinkClick = (pageId) => {
     onNavigate(pageId);
     setMobileMenuOpen(false);
   };
+
+  const firstName = currentUser && currentUser.name ? currentUser.name.split(' ')[0] : 'Student';
 
   return (
     <header className="navbar">
@@ -55,6 +57,38 @@ export default function Navbar({ currentPage, onNavigate, savedCount }) {
               </li>
             );
           })}
+
+          {currentUser ? (
+            <>
+              <li className="navbar__user-item">
+                <span className="navbar__user-badge" title={currentUser.email}>
+                  <span className="navbar__user-icon">&#128100;</span> {firstName}
+                </span>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  className="nav-link nav-link--auth"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onLogout();
+                  }}
+                >
+                  Log Out
+                </button>
+              </li>
+            </>
+          ) : (
+            <li>
+              <button
+                type="button"
+                className={`nav-link nav-link--auth ${currentPage === 'login' ? 'nav-link--active' : ''}`}
+                onClick={() => handleLinkClick('login')}
+              >
+                Log In
+              </button>
+            </li>
+          )}
         </ul>
       </div>
     </header>
